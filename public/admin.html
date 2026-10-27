@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — VEXORA API</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background: #0b0b10; color: #eee; min-height: 100vh; padding: 22px 14px 60px; }
+    .wrap { max-width: 980px; margin: 0 auto; }
+    h1 { font-size: 24px; } h1 span { color: #ff2d4d; }
+    .sub { color: #9a9ab0; font-size: 14px; margin: 4px 0 20px; }
+    .card { background: #14141d; border: 1px solid #2a2a3a; border-radius: 14px; padding: 20px; margin-bottom: 18px; }
+    label { display: block; font-size: 13px; color: #bdbdd0; margin: 12px 0 6px; }
+    input, select { width: 100%; padding: 10px 12px; border-radius: 9px; border: 1px solid #33334a; background: #0e0e15; color: #fff; font-size: 14px; outline: none; }
+    input:focus { border-color: #c8102e; }
+    button { padding: 10px 16px; border: none; border-radius: 9px; background: linear-gradient(135deg, #c8102e, #ff2d4d); color: #fff; font-weight: 600; cursor: pointer; font-size: 14px; }
+    button.ghost { background: #23233a; }
+    button.small { padding: 6px 10px; font-size: 12px; border-radius: 7px; }
+    button.danger { background: #5a1020; }
+    .row { display: flex; gap: 10px; flex-wrap: wrap; } .row > * { flex: 1; min-width: 130px; }
+    .stats { display: flex; gap: 12px; flex-wrap: wrap; }
+    .stat { flex: 1; min-width: 140px; background: #0e0e15; border: 1px solid #2a2a3a; border-radius: 12px; padding: 14px; }
+    .stat .n { font-size: 26px; font-weight: 700; color: #ffd166; }
+    .stat .t { font-size: 12px; color: #9a9ab0; margin-top: 2px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 9px 8px; border-bottom: 1px solid #23233a; text-align: left; vertical-align: middle; }
+    th { color: #9a9ab0; font-weight: 600; }
+    td.key { font-family: monospace; color: #ffd166; word-break: break-all; }
+    td input { width: 76px; padding: 6px 8px; }
+    .badge { padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+    .badge.on { background: #14532d; color: #7ee2a0; } .badge.off { background: #5a1020; color: #ff8296; }
+    .msg { margin: 10px 0; font-size: 14px; display: none; }
+    .msg.err { display: block; color: #ff8296; } .msg.ok { display: block; color: #7ee2a0; }
+    .hidden { display: none; }
+    .scroll { overflow-x: auto; }
+    .ep { font-family: monospace; font-size: 12px; color: #bdbdd0; line-height: 1.9; word-break: break-all; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <h1>VEXORA <span>API</span> — Admin</h1>
+    <p class="sub">Keys, daily limits and usage — full control.</p>
+
+    <!-- LOGIN -->
+    <div class="card" id="loginCard">
+        <form id="loginForm">
+            <div class="row">
+                <div><label>Username</label><input id="auser" autocomplete="username"></div>
+                <div><label>Password</label><input id="apass" type="password" autocomplete="current-password"></div>
+            </div>
+            <div style="margin-top:16px"><button type="submit" style="width:100%">Login</button></div>
+            <div class="msg" id="loginMsg"></div>
+        </form>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dash" class="hidden">
+        <div class="card">
+            <div class="stats">
+                <div class="stat"><div class="n" id="stKeys">–</div><div class="t">Total API keys</div></div>
+                <div class="stat"><div class="n" id="stReq">–</div><div class="t">Requests today (PKT)</div></div>
+                <div class="stat"><div class="n" id="stStore" style="font-size:17px;padding-top:6px">–</div><div class="t">Storage</div></div>
+            </div>
+            <div class="ep" id="epStats" style="margin-top:12px"></div>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom:6px">Create a key manually</h3>
+            <form id="createForm">
+                <div class="row">
+                    <div><label>Name</label><input id="cname" placeholder="Customer name"></div>
+                    <div><label>Email (optional)</label><input id="cemail" placeholder="user@example.com"></div>
+                    <div><label>Daily limit (-1 = unlimited)</label><input id="climit" type="number" value="100"></div>
+                </div>
+                <div style="margin-top:14px"><button type="submit">Create Key</button></div>
+                <div class="msg" id="createMsg"></div>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom:10px">All keys</h3>
+            <div class="scroll">
+            <table>
+                <thead><tr><th>Key</th><th>Name / Email</th><th>Limit/day</th><th>Used today</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="keysBody"><tr><td colspan="6">Loading…</td></tr></tbody>
+            </table>
+            </div>
+            <div class="msg" id="keysMsg"></div>
+            <div style="margin-top:12px"><button class="ghost" id="refreshBtn">↻ Refresh</button></div>
+        </div>
+    </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+async function api(path, opts = {}) {
+    const res = await fetch(path, { headers: { 'Content-Type': 'application/json' }, ...opts });
+    return res.json();
+}
+
+$('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = await api('/admin-api/login', { method: 'POST', body: JSON.stringify({ user: $('auser').value, pass: $('apass').value }) });
+    if (data.status) { showDash(); }
+    else { $('loginMsg').className = 'msg err'; $('loginMsg').textContent = data.message || 'Login failed.'; }
+});
+
+async function showDash() {
+    const s = await api('/admin-api/stats');
+    if (!s.status) return;
+    $('loginCard').classList.add('hidden');
+    $('dash').classList.remove('hidden');
+    $('stKeys').textContent = s.totalKeys;
+    $('stReq').textContent = s.requestsToday;
+    $('stStore').textContent = s.storage || '–';
+    const ep = Object.entries(s.perEndpoint || {}).sort((a, b) => b[1] - a[1]);
+    $('epStats').innerHTML = ep.length ? ep.map(([k, v]) => `${k}: <b style="color:#ffd166">${v}</b>`).join(' &nbsp;·&nbsp; ') : 'No requests yet today.';
+    loadKeys();
+}
+
+async function loadKeys() {
+    const data = await api('/admin-api/keys');
+    const tb = $('keysBody');
+    if (!data.status) { tb.innerHTML = '<tr><td colspan="6">Could not load keys.</td></tr>'; return; }
+    if (!data.keys.length) { tb.innerHTML = '<tr><td colspan="6">No keys yet. Users can register at /getkey.</td></tr>'; return; }
+    tb.innerHTML = '';
+    for (const k of data.keys) {
+        const tr = document.createElement('tr');
+        const lim = k.limit === -1 ? '∞' : k.limit;
+        tr.innerHTML = `
+            <td class="key">${k.key}</td>
+            <td>${escapeHtml(k.name || '')}<br><small style="color:#9a9ab0">${escapeHtml(k.email || '')}</small></td>
+            <td><input type="number" value="${k.limit}" id="lim-${cssId(k.key)}"></td>
+            <td>${k.usedToday} / ${lim}</td>
+            <td><span class="badge ${k.banned ? 'off' : 'on'}">${k.banned ? 'BANNED' : 'ACTIVE'}</span></td>
+            <td style="white-space:nowrap">
+                <button class="small" onclick="saveKey('${k.key}')">Save</button>
+                <button class="small ghost" onclick="toggleBan('${k.key}', ${!k.banned})">${k.banned ? 'Unban' : 'Ban'}</button>
+                <button class="small danger" onclick="delKey('${k.key}')">Delete</button>
+            </td>`;
+        tb.appendChild(tr);
+    }
+}
+
+function cssId(k) { return k.replace(/[^a-zA-Z0-9]/g, ''); }
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+async function saveKey(key) {
+    const limit = parseInt(document.getElementById('lim-' + cssId(key)).value, 10);
+    const data = await api(`/admin-api/keys/${encodeURIComponent(key)}/update`, { method: 'POST', body: JSON.stringify({ limit }) });
+    flash(data.status, data.status ? 'Saved.' : (data.message || 'Failed.'));
+    if (data.status) loadKeys();
+}
+async function toggleBan(key, banned) {
+    const data = await api(`/admin-api/keys/${encodeURIComponent(key)}/update`, { method: 'POST', body: JSON.stringify({ banned }) });
+    flash(data.status, data.status ? (banned ? 'Key banned.' : 'Key unbanned.') : 'Failed.');
+    if (data.status) loadKeys();
+}
+async function delKey(key) {
+    if (!confirm('Delete this key permanently?')) return;
+    const data = await api(`/admin-api/keys/${encodeURIComponent(key)}`, { method: 'DELETE' });
+    flash(data.status, data.status ? 'Key deleted.' : 'Failed.');
+    if (data.status) showDash();
+}
+function flash(ok, text) { $('keysMsg').className = 'msg ' + (ok ? 'ok' : 'err'); $('keysMsg').textContent = text; }
+
+$('createForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = await api('/admin-api/keys', { method: 'POST', body: JSON.stringify({ name: $('cname').value, email: $('cemail').value, limit: parseInt($('climit').value, 10) }) });
+    $('createMsg').className = 'msg ' + (data.status ? 'ok' : 'err');
+    $('createMsg').textContent = data.status ? ('New key: ' + data.apikey) : (data.message || 'Failed.');
+    if (data.status) { $('cname').value = ''; $('cemail').value = ''; showDash(); }
+});
+
+$('refreshBtn').addEventListener('click', showDash);
+
+// Agar session cookie pehle se hai to seedha dashboard
+showDash();
+</script>
+</body>
+</html>

@@ -1171,6 +1171,13 @@
                     <i class="fas fa-search"></i>
                     <input type="text" id="apisSearch" placeholder="Search APIs by name or description...">
                 </div>
+                <div class="apis-search" style="margin-top:12px;">
+                    <i class="fas fa-key"></i>
+                    <input type="text" id="apiKeyInput" placeholder="Paste your API key here to test (get a free key → /getkey)">
+                </div>
+                <div style="text-align:center; margin-top:12px;">
+                    <a href="/getkey" class="nav-btn" style="display:inline-block; padding:12px 30px; text-decoration:none;"><i class="fas fa-key"></i> GET FREE API KEY</a>
+                </div>
             </div>
             
             <div class="apis-grid" id="apisGrid">
@@ -1952,6 +1959,20 @@
             testModal.classList.add('active');
         }
         
+        // API key helper — tester ki har call mein key khud lag jati hai
+        function withKey(url) {
+            const input = document.getElementById('apiKeyInput');
+            const k = ((input && input.value) || localStorage.getItem('vx_apikey') || '').trim();
+            if (!k) return url;
+            return url + (url.includes('?') ? '&' : '?') + 'apikey=' + encodeURIComponent(k);
+        }
+        (function initApiKeyInput() {
+            const input = document.getElementById('apiKeyInput');
+            if (!input) return;
+            input.value = localStorage.getItem('vx_apikey') || '';
+            input.addEventListener('input', () => localStorage.setItem('vx_apikey', input.value.trim()));
+        })();
+
         // Run API test
         async function runApiTest() {
             if (!currentTestApi) return;
@@ -1978,7 +1999,7 @@
             
             try {
                 const startTime = Date.now();
-                const response = await fetch(apiUrl);
+                const response = await fetch(withKey(apiUrl));
                 const endTime = Date.now();
                 const responseTime = endTime - startTime;
                 
@@ -2025,7 +2046,7 @@
                 try {
                     const startTime = Date.now();
                     const testUrl = `${BASE_URL}${api.endpoint}?${api.param}=test`;
-                    const response = await fetch(testUrl);
+                    const response = await fetch(withKey(testUrl));
                     const endTime = Date.now();
                     const responseTime = endTime - startTime;
                     
@@ -2062,7 +2083,7 @@
                 try {
                     const startTime = Date.now();
                     const testUrl = `${BASE_URL}${api.endpoint}?${api.param}=test`;
-                    const response = await fetch(testUrl, { method: 'HEAD' });
+                    const response = await fetch(withKey(testUrl), { method: 'HEAD' });
                     const endTime = Date.now();
                     const responseTime = endTime - startTime;
                     
