@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VEXORA API - Fast & Flexible</title>
+  <meta name="description" content="Complete VEXORA API API documentation. Fast, secure, and flexible for all your development needs.">
+  <meta name="robots" content="index, follow">
+
+  <link rel="icon" href="https://files.catbox.moe/g2kew9.jpg" type="image/jpeg">
+  <link rel="apple-touch-icon" href="https://files.catbox.moe/2ybrj7.jpg">
+  <link rel="manifest" href="/manifest.json">
+  <meta property="og:title" content="VEXORA API - Fast & Flexible">
+  <meta property="og:description" content="Complete and reliable public API for developers.">
+  <meta property="og:image" content="https://files.catbox.moe/2ybrj7.jpg">
+  <meta property="og:url" content="https://arslanmd-api.vercel.app">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "VEXORA API",
+      "url": "https://arslanmd-api.vercel.app",
+      "description": "API Documentation by VEXORA API. Fast, secure, and flexible.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "VEXORA API Developer Network"
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-react@latest/dist/umd/lucide.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: rgba(0, 0, 0, 0.95);
+      --bg-secondary: rgba(255, 255, 255, 0.05);
+      --bg-glass: rgba(255, 255, 255, 0.1);
+      --bg-glass-hover: rgba(255, 255, 255, 0.15);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.5);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --accent-color: #ffffff;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --blur: blur(20px);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+    }
+
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      backdrop-filter: var(--blur);
+    }
+
+    .loading-content {
+      text-align: center;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--border-color);
+      border-top-color: var(--accent-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    .loading-text {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .glass {
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .search-container {
+      position: relative;
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+
+    #search-input {
+      width: 100%;
+      padding: 1rem 1.5rem 1rem 3rem;
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur);
+      border: 1px solid var(--border-color);
+      border-radius: 15px;
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    #search-input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+
+    .search-container i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+    }
+
+    .welcome-section {
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur);
+      padding: 2.5rem;
+      border-radius: 20px;
+      margin: 3rem 0;
+      border: 1px solid var(--border-color);
+    }
+
+    .welcome-section p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 800px;
+    }
+
+    .statistics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+
+    .stat-item {
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur);
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .stat-item:hover {
+      background: var(--bg-glass-hover);
+      transform: translateY(-5px);
+    }
+
+    .stat-item i {
+      font-size: 2.5rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+    }
+
+    .stat-item span {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-item p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    #api-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+
+    .category-card {
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur);
+      border: 1px solid var(--border-color);
+      border-radius: 15px;
+      padding: 1.5rem;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .category-card:hover {
+      background: var(--bg-glass-hover);
+      transform: translateY(-5px);
+      border-color: var(--accent-color);
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .category-header i {
+      font-size: 1.5rem;
+      color: var(--accent-color);
+    }
+
+    .endpoint-list {
+      list-style: none;
+    }
+
+    .endpoint-item {
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      border-left: 3px solid var(--accent-color);
+      transition: var(--transition);
+    }
+
+    .endpoint-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .copyright {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      background: var(--bg-glass);
+    }
+
+    .social-link:hover {
+      color: var(--text-primary);
+      background: var(--bg-glass-hover);
+      transform: translateY(-2px);
+    }
+
+    .menu-btn {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1000;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 0.75rem;
+      cursor: pointer;
+      backdrop-filter: var(--blur);
+      transition: var(--transition);
+    }
+
+    .menu-btn:hover {
+      background: var(--bg-glass-hover);
+      transform: scale(1.05);
+    }
+
+    .bar {
+      width: 25px;
+      height: 2px;
+      background: var(--text-primary);
+      margin: 5px 0;
+      transition: var(--transition);
+    }
+
+    .theme-switch-container {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+    }
+
+    .theme-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+    }
+
+    .theme-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      border-radius: 34px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5px;
+      backdrop-filter: var(--blur);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 4px;
+      bottom: 3px;
+      background: var(--text-primary);
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(30px);
+    }
+
+    .icon {
+      font-size: 0.8rem;
+      color: var(--text-primary);
+    }
+
+    .changelog-btn-container {
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .changelog-btn {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 0.75rem 1.5rem;
+      border-radius: 15px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+      backdrop-filter: var(--blur);
+    }
+
+    .changelog-btn:hover {
+      background: var(--bg-glass-hover);
+      transform: translateY(-2px);
+    }
+
+    .notification-badge {
+      background: #ff4757;
+      color: white;
+      border-radius: 50%;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
+
+    .api-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      backdrop-filter: var(--blur);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 5px;
+      transition: var(--transition);
+    }
+
+    .close-modal:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .tester-controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tester-method, .tester-url {
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+    }
+
+    .tester-method {
+      min-width: 100px;
+    }
+
+    .tester-url {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .send-btn {
+      padding: 0.75rem 1.5rem;
+      background: var(--accent-color);
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .send-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .response-container {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .response-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .response-status {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .response-time {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .response-output {
+      min-height: 200px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+    }
+
+    .loading-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .statistics {
+        grid-template-columns: 1fr;
+      }
+      
+      #api-categories {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="loading-screen">
+  <div class="loading-content">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading VEXORA API APIs...</div>
+  </div>
+</div>
+
+<button class="menu-btn" aria-label="Toggle navigation menu">
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+</button>
+
+<div class="theme-switch-container">
+  <label class="theme-switch" aria-label="Toggle theme">
+    <input type="checkbox" id="themeToggle">
+    <span class="slider">
+      <i class="lucide lucide-sun icon sun-icon"></i>
+      <i class="lucide lucide-moon icon moon-icon"></i>
+    </span>
+  </label>
+</div>
+
+<main class="container">
+  <h1>VEXORA API Endpoints</h1>
+
+  <section class="search-container">
+    <input type="text" id="search-input" placeholder="Search API endpoints..." aria-label="Search API endpoints">
+    <i class="lucide lucide-search"></i>
+  </section>
+
+  <section class="changelog-btn-container">
+    <button id="showChangelog" class="changelog-btn">
+      <i class="lucide lucide-bell"></i> View Updates
+      <span class="notification-badge" aria-live="polite" aria-atomic="true">999</span>
+    </button>
+  </section>
+
+  <section class="welcome-section glass">
+    <h2>Welcome to VEXORA API</h2>
+    <p>Explore various public endpoints that are fast, secure, and flexible, ready to use for all your application needs. We are committed to providing high-quality APIs for developers.</p>
+  </section>
+
+  <section class="statistics">
+    <div class="stat-item glass">
+      <i class="lucide lucide-network"></i>
+      <span id="total-endpoints">0</span>
+      <p>Total Endpoints</p>
+    </div>
+    <div class="stat-item glass">
+      <i class="lucide lucide-check-circle"></i>
+      <span id="online-endpoints">0</span>
+      <p>Online</p>
+    </div>
+    <div class="stat-item glass">
+      <i class="lucide lucide-x-circle"></i>
+      <span id="offline-endpoints">0</span>
+      <p>Offline</p>
+    </div>
+  </section>
+
+  <section id="api-categories" aria-live="polite">
+    <!-- Categories will be dynamically loaded here -->
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="copyright">
+        &copy; <span id="current-year"></span> VEXORA API – Powered by VEXORA API Developer Network.<br>
+        Owner: Mr VEXORA API – <a href="https://github.com/VEXORA API" style="color: var(--text-secondary);">github.com/VEXORA API</a>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/VEXORA API" target="_blank" rel="noopener noreferrer" class="social-link glass">
+          <i class="lucide lucide-github"></i><span>GitHub</span>
+        </a>
+        <a href="https://whatsapp.com/channel/arslanmdapi" target="_blank" rel="noopener noreferrer" class="social-link glass">
+          <i class="lucide lucide-message-circle"></i><span>WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<div class="api-modal" id="apiModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content glass">
+    <div class="modal-header">
+      <h3 id="modalTitle">API Tester</h3>
+      <button class="close-modal" aria-label="Close API tester">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="tester-controls">
+        <select class="tester-method" id="testerMethod">
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+          <option value="PUT">PUT</option>
+          <option value="DELETE">DELETE</option>
+        </select>
+        <input type="text" class="tester-url" id="testerUrl" placeholder="https://arslanmd-api.vercel.app/endpoint">
+        <button class="send-btn">
+          <i class="lucide lucide-send"></i> Send Request
+        </button>
+      </div>
+      <div class="response-container glass">
+        <div class="response-meta">
+          <div class="response-status" aria-live="polite"></div>
+          <div class="response-time"></div>
+        </div>
+        <div class="response-output">
+          <div class="loading-indicator" style="display: none;">
+            <div class="loading-spinner"></div>
+            <span class="loading-text">Processing request...</span>
+          </div>
+          <div class="response-content">
+            <p style="text-align: center; color: var(--text-secondary);">API response will appear here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Set current year
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+
+  // Theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
+
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    body.classList.add('dark-theme');
+    themeToggle.checked = true;
+  }
+
+  themeToggle.addEventListener('change', () => {
+    if (themeToggle.checked) {
+      body.classList.add('dark-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      body.classList.remove('dark-theme');
+      localStorage.setItem('theme', 'light');
+    }
+  });
+
+  // Loading screen removal
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelector('.loading-screen').style.opacity = '0';
+      setTimeout(() => {
+        document.querySelector('.loading-screen').style.display = 'none';
+      }, 300);
+    }, 1000);
+  });
+
+  // API Categories Data (Example)
+  const apiCategories = [
+    {
+      name: "Images",
+      icon: "image",
+      endpoints: [
+        { method: "GET", path: "/api/images/random", description: "Get random image" },
+        { method: "GET", path: "/api/images/anime", description: "Get anime image" }
+      ]
+    },
+    {
+      name: "Utilities",
+      icon: "tool",
+      endpoints: [
+        { method: "GET", path: "/api/utils/qrcode", description: "Generate QR code" },
+        { method: "POST", path: "/api/utils/shorten", description: "Shorten URL" }
+      ]
+    }
+  ];
+
+  // Render categories
+  const categoriesContainer = document.getElementById('api-categories');
+  apiCategories.forEach(category => {
+    const categoryCard = document.createElement('div');
+    categoryCard.className = 'category-card glass';
+    categoryCard.innerHTML = `
+      <div class="category-header">
+        <i class="lucide lucide-${category.icon}"></i>
+        <h3>${category.name}</h3>
+      </div>
+      <ul class="endpoint-list">
+        ${category.endpoints.map(endpoint => `
+          <li class="endpoint-item" onclick="testEndpoint('${endpoint.path}')">
+            <div class="endpoint-method">${endpoint.method}</div>
+            <div class="endpoint-path">${endpoint.path}</div>
+            <div class="endpoint-desc">${endpoint.description}</div>
+          </li>
+        `).join('')}
+      </ul>
+    `;
+    categoriesContainer.appendChild(categoryCard);
+  });
+
+  // Update statistics
+  document.getElementById('total-endpoints').textContent = '25';
+  document.getElementById('online-endpoints').textContent = '23';
+  document.getElementById('offline-endpoints').textContent = '2';
+
+  // Modal functionality
+  function testEndpoint(path) {
+    const modal = document.getElementById('apiModal');
+    const urlInput = document.getElementById('testerUrl');
+    urlInput.value = `https://arslanmd-api.vercel.app${path}`;
+    modal.style.display = 'flex';
+  }
+
+  document.querySelector('.close-modal').addEventListener('click', () => {
+    document.getElementById('apiModal').style.display = 'none';
+  });
+
+  // Close modal when clicking outside
+  window.addEventListener('click', (e) => {
+    const modal = document.getElementById('apiModal');
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>

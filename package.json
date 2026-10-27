@@ -1,0 +1,32 @@
+{
+  "name": "vexora-api-ultra",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=18.x"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.0",
+    "@vitalets/google-translate-api": "^8.0.0",
+    "aptoide-api": "^4.0.7",
+    "axios": "^1.5.0",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.5.0",
+    "form-data": "^4.0.0",
+    "gifenc": "^1.0.3",
+    "https": "^1.0.0",
+    "jimp": "^1.6.0",
+    "node-fetch": "^3.3.2",
+    "puppeteer": "^22.0.0",
+    "qrcode": "^1.5.4",
+    "qrcode-reader": "1.0.4",
+    "weather-js": "^2.0.0",
+    "yt-search": "^2.10.6"
+  }
+}

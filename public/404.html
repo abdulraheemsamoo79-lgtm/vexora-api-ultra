@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARSLAN APIS ERROR 404 | VEXORA API API Network</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+:root {
+        --neon-cyan: #00f3ff;
+        --neon-pink: #ff00ff;
+        --neon-purple: #9d00ff;
+        --neon-green: #00ff9d;
+        --neon-yellow: #ffed00;
+        --neon-red: #ff0055;
+        --cyber-dark: #0a0a0f;
+        --cyber-darker: #050508;
+        --cyber-gray: #1a1a2e;
+        --cyber-light: #e0e0ff;
+        --cyber-blue: #0066ff;
+    }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--cyber-dark);
+            background-image:
+            radial-gradient(circle at 20% 30%, rgba(157, 0, 255, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(255, 0, 85, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(0, 243, 255, 0.1) 0%, transparent 50%);
+            color: var(--cyber-light);
+            font-family: 'Exo 2', sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+            linear-gradient(90deg, transparent 50%, rgba(255, 0, 85, 0.03) 50%),
+            linear-gradient(transparent 50%, rgba(0, 243, 255, 0.03) 50%);
+            background-size: 30px 30px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Scanline effect */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+            to bottom,
+            transparent 50%,
+            rgba(0, 0, 0, 0.5) 50%
+            );
+            background-size: 100% 4px;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.15;
+            animation: scanline 10s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translateY(0px);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        /* Grid lines */
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+            linear-gradient(to right, rgba(255, 0, 85, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 0, 85, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Main container */
+        .cyber-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Glitch effect */
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--neon-red);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--neon-cyan);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(31px, 9999px, 94px, 0);
+            }
+            5% {
+                clip: rect(112px, 9999px, 76px, 0);
+            }
+            10% {
+                clip: rect(85px, 9999px, 77px, 0);
+            }
+            15% {
+                clip: rect(27px, 9999px, 97px, 0);
+            }
+            20% {
+                clip: rect(64px, 9999px, 98px, 0);
+            }
+            100% {
+                clip: rect(64px, 9999px, 98px, 0);
+            }
+        }
+
+        @keyframes glitch-anim2 {
+            0% {
+                clip: rect(65px, 9999px, 119px, 0);
+            }
+            5% {
+                clip: rect(52px, 9999px, 99px, 0);
+            }
+            10% {
+                clip: rect(79px, 9999px, 94px, 0);
+            }
+            15% {
+                clip: rect(75px, 9999px, 87px, 0);
+            }
+            20% {
+                clip: rect(67px, 9999px, 56px, 0);
+            }
+            100% {
+                clip: rect(67px, 9999px, 56px, 0);
+            }
+        }
+
+        /* Header */
+        .cyber-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 0, 85, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--neon-red), var(--neon-purple));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(45deg, var(--neon-red), var(--neon-purple));
+            filter: blur(15px);
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .logo-icon i {
+            font-size: 36px;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--neon-red), var(--neon-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .logo-text .tagline {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            color: var(--neon-green);
+            letter-spacing: 2px;
+        }
+
+        /* Error content */
+        .error-content {
+            text-align: center;
+            padding: 40px;
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 0, 85, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .error-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 8rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--neon-red), var(--neon-yellow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            line-height: 1;
+            text-shadow: 0 0 30px rgba(255, 0, 85, 0.5);
+        }
+
+        .error-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            color: var(--neon-red);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .error-message {
+            font-size: 1.2rem;
+            color: #b0b0ff;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Broken API Animation */
+        .broken-api {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            position: relative;
+        }
+
+        .broken-api:before, .broken-api:after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff0055"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M7 13h10v-2H7z"/></svg>') no-repeat center;
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 85, 0.7));
+        }
+
+        .broken-api:before {
+            top: 0;
+            left: 0;
+            animation-delay: 0s;
+        }
+
+        .broken-api:after {
+            bottom: 0;
+            right: 0;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .cyber-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--neon-red), var(--neon-purple));
+            color: white;
+            border: 1px solid transparent;
+            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-red));
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 0, 85, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(0, 102, 255, 0.2);
+            color: white;
+            border: 1px solid var(--cyber-blue);
+            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 102, 255, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.4);
+        }
+
+        /* Footer */
+        .cyber-footer {
+            text-align: center;
+            padding: 30px;
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .footer-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #b0b0ff;
+            text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-link:hover {
+            color: var(--neon-pink);
+            transform: translateY(-3px);
+        }
+
+        .creator-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .creator-name {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-yellow);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .support-badge {
+            display: inline-block;
+            background: rgba(255, 0, 255, 0.2);
+            border: 1px solid var(--neon-pink);
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            color: var(--neon-pink);
+            margin-top: 10px;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--neon-red);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float-particle linear infinite;
+        }
+
+        @keyframes float-particle {
+            to {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 0, 85, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 15px rgba(255, 0, 85, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 0, 85, 0);
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(26, 26, 46, 0.8);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--neon-red), var(--neon-purple));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--neon-purple), var(--neon-red));
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cyber-container {
+                padding: 20px;
+            }
+
+            .error-code {
+                font-size: 5rem;
+            }
+
+            .error-title {
+                font-size: 1.5rem;
+            }
+
+            .error-message {
+                font-size: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cyber-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .logo-text h1 {
+                font-size: 1.8rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Visual Effects -->
+    <div class="scanlines"></div>
+    <div class="grid-lines"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Error Content -->
+    <main class="error-content">
+        <div class="broken-api"></div>
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">ENDPOINT TIDAK DITEMUKAN</h2>
+        <p class="error-message">
+            ></i>
+        Oops! WRONG ENDPOINT
+        <br><br>
+    </p>
+
+    <div class="action-buttons">
+        <a href="/" class="cyber-btn btn-primary">
+            <i class="fas fa-home"></i> home
+        </a>
+        <a href="/docs" class="cyber-btn btn-secondary">
+            <i class="fas fa-book"></i> documentation
+        </a>
+        <a href="https://github.com/VEXORA API" class="cyber-btn btn-secondary">
+            <i class="fab fa-github"></i> GITHUB REPO
+        </a>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="arslan-md">
+    <h3 class="footer-title">ARSLAN-MD API NETWORK</h3>
+
+    <div class="footer-links">
+        <a href="https://whatsapp.com/channel/0029VarfjW04tRrmwfb8x306" class="footer-link">
+            <i class="fab fa-whatsapp"></i> WhatsApp Channel
+        </a>
+        <a href="https://github.com/VEXORA API" class="footer-link">
+            <i class="fab fa-github"></i> GitHub
+        </a>
+        <a href="#" class="footer-link">
+            <i class="fas fa-code"></i> API Docs
+        </a>
+        <a href="#" class="footer-link">
+            <i class="fas fa-question-circle"></i> Support
+        </a>
+    </div>
+
+    <div class="creator-info">
+        <div class="creator-name">
+            CREATOR: ARSLAN-MD
+        </div>
+        <div class="support-badge">
+            <i class="fas fa-headset"></i> SUPPORT: 923237045919
+        </div>
+        <div style="color: var(--neon-green); font-family: 'Rajdhani'; font-weight: 600; margin-top: 10px;">
+            <i class="fas fa-cube"></i> PACK: ARSLAN APIS NETWORK
+        </div>
+    </div>
+</footer>
+</div>
+
+<script>
+// Create floating particles
+function createParticles() {
+const particlesContainer = document.getElementById('particles');
+const particleCount = window.innerWidth < 768 ? 30: 50;
+
+for (let i = 0; i < particleCount; i++) {
+const particle = document.createElement('div');
+particle.classList.add('particle');
+
+// Random properties
+const size = Math.random() * 8 + 3;
+const posX = Math.random() * window.innerWidth;
+const duration = Math.random() * 10 + 10;
+const delay = Math.random() * -20;
+const opacity = Math.random() * 0.5 + 0.1;
+const color = Math.random() > 0.5 ? 'var(--neon-red)': 'var(--neon-cyan)';
+
+particle.style.width = `${size}px`;
+particle.style.height = `${size}px`;
+particle.style.left = `${posX}px`;
+particle.style.bottom = `-${size}px`;
+particle.style.animationDuration = `${duration}s`;
+particle.style.animationDelay = `${delay}s`;
+particle.style.opacity = opacity;
+particle.style.background = color;
+particle.style.boxShadow = `0 0 10px ${color}`;
+
+particlesContainer.appendChild(particle);
+}
+}
+
+// Animate broken API
+function animateBrokenAPI() {
+const brokenAPI = document.querySelector('.broken-api');
+setInterval(() => {
+brokenAPI.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+}, 1000);
+}
+
+// Add cyber effects to buttons
+function addCyberEffects() {
+document.querySelectorAll('.cyber-btn').forEach(btn => {
+btn.addEventListener('mouseenter', function() {
+this.style.transform = 'scale(1.05)';
+});
+
+btn.addEventListener('mouseleave', function() {
+this.style.transform = 'scale(1)';
+});
+
+btn.addEventListener('click', function(e) {
+if (this.getAttribute('href') === '#' || !this.getAttribute('href')) {
+e.preventDefault();
+// Add click effect
+this.style.transform = 'scale(0.95)';
+setTimeout(() => {
+this.style.transform = '';
+}, 200);
+
+// Show cyber message
+const errorMsg = "ARSLAN ERROR: Link belum dikonfigurasi. Silakan hubungi support.";
+alert(errorMsg);
+}
+});
+});
+}
+
+// Add glitch effect to error code
+function addGlitchEffect() {
+const errorCode = document.querySelector('.error-code');
+setInterval(() => {
+if (Math.random() > 0.7) {
+errorCode.style.textShadow = `0 0 20px ${Math.random() > 0.5 ? 'var(--neon-red)': 'var(--neon-cyan)'}`;
+setTimeout(() => {
+errorCode.style.textShadow = '';
+}, 100);
+}
+},
+500);
+}
+
+// Initialize everything when DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+createParticles();
+animateBrokenAPI();
+addCyberEffects();
+addGlitchEffect();
+
+// Add terminal-like typing effect to error message
+const errorMessage = document.querySelector('.error-message');
+const originalText = errorMessage.innerHTML;
+errorMessage.innerHTML = '';
+
+let i = 0;
+const typeWriter = () => {
+if (i < originalText.length) {
+errorMessage.innerHTML += originalText.charAt(i);
+i++;
+setTimeout(typeWriter, 10);
+}
+};
+
+// Start typing effect after a delay
+setTimeout(typeWriter, 1000);
+});
+
+// Recreate particles on resize
+window.addEventListener('resize', () => {
+document.getElementById('particles').innerHTML = '';
+createParticles();
+});
+</script>
+</body>
+</html>
