@@ -647,7 +647,7 @@
 
   <section class="welcome-section glass">
     <h2>Welcome to VEXORA API</h2>
-    <p>Explore various public endpoints that are fast, secure, and flexible, ready to use for all your application needs. We are committed to providing high-quality APIs for developers.</p>
+    <p>Explore 31 tested endpoints — fast, secure, and flexible. Every endpoint needs a free API key: add &apikey=YOUR_KEY to the URL. Get yours in seconds at /getkey (100 requests/day, free forever).</p>
   </section>
 
   <section class="statistics">
@@ -704,7 +704,7 @@
           <option value="PUT">PUT</option>
           <option value="DELETE">DELETE</option>
         </select>
-        <input type="text" class="tester-url" id="testerUrl" placeholder="https://arslanmd-api.vercel.app/endpoint">
+        <input type="text" class="tester-url" id="testerUrl" placeholder="https://your-domain.vercel.app/api/ytsearch?q=phonk&apikey=YOUR_KEY">
         <button class="send-btn">
           <i class="lucide lucide-send"></i> Send Request
         </button>
@@ -767,19 +767,59 @@
   // API Categories Data (Example)
   const apiCategories = [
     {
-      name: "Images",
-      icon: "image",
+      name: "Downloaders",
+      icon: "download",
       endpoints: [
-        { method: "GET", path: "/api/images/random", description: "Get random image" },
-        { method: "GET", path: "/api/images/anime", description: "Get anime image" }
+        { method: "GET", path: "/api/ttdl?url=", description: "TikTok video (no watermark)" },
+        { method: "GET", path: "/api/ytdl?url=&type=mp4", description: "YouTube video / MP3" },
+        { method: "GET", path: "/api/ytmp3?url=", description: "YouTube to MP3" },
+        { method: "GET", path: "/api/ytmp4?url=", description: "YouTube to MP4" },
+        { method: "GET", path: "/api/igdl?url=", description: "Instagram reels & posts" },
+        { method: "GET", path: "/api/fbdl?url=", description: "Facebook video HD/SD" },
+        { method: "GET", path: "/api/twitterdl?url=", description: "X / Twitter video" },
+        { method: "GET", path: "/api/spotifydl?url=", description: "Spotify track to MP3" },
+        { method: "GET", path: "/api/capcut?url=", description: "CapCut template video" },
+        { method: "GET", path: "/api/gdrive?url=", description: "Google Drive direct link" },
+        { method: "GET", path: "/api/mediafire?url=", description: "MediaFire direct link" },
+        { method: "GET", path: "/api/ttmp3?url=", description: "TikTok to MP3" },
+        { method: "GET", path: "/api/pinterest?url=", description: "Pinterest pin photo" },
+        { method: "GET", path: "/api/pinterest-video?url=", description: "Pinterest pin video" }
       ]
     },
     {
-      name: "Utilities",
+      name: "Search",
+      icon: "search",
+      endpoints: [
+        { method: "GET", path: "/api/ttsearch?q=", description: "Search TikTok videos" },
+        { method: "GET", path: "/api/ytsearch?q=", description: "Search YouTube videos" },
+        { method: "GET", path: "/api/aptoide?q=", description: "Search APKs on Aptoide" },
+        { method: "GET", path: "/api/npmsearch?q=", description: "Search NPM packages" },
+        { method: "GET", path: "/api/duckduckgo?q=", description: "Web search" },
+        { method: "GET", path: "/api/searchgroups?q=", description: "WhatsApp group links" },
+        { method: "GET", path: "/api/githubstalk?username=", description: "GitHub profile lookup" }
+      ]
+    },
+    {
+      name: "Tools",
       icon: "tool",
       endpoints: [
-        { method: "GET", path: "/api/utils/qrcode", description: "Generate QR code" },
-        { method: "POST", path: "/api/utils/shorten", description: "Shorten URL" }
+        { method: "GET", path: "/api/ssweb?url=", description: "Website screenshot (JPEG)" },
+        { method: "GET", path: "/api/gitclone?url=", description: "GitHub repo ZIP link" },
+        { method: "GET", path: "/api/qrcodegenerator?text=", description: "QR code image" },
+        { method: "GET", path: "/api/translate?text=&to=ur", description: "Translate text" },
+        { method: "GET", path: "/api/weather?q=", description: "City weather" },
+        { method: "GET", path: "/api/lyrics?title=&artist=", description: "Song lyrics" },
+        { method: "GET", path: "/api/attp?text=", description: "Animated text sticker (GIF)" }
+      ]
+    },
+    {
+      name: "Fun & News",
+      icon: "smile",
+      endpoints: [
+        { method: "GET", path: "/api/cekkhodam?nama=", description: "Fun khodam checker" },
+        { method: "GET", path: "/api/tahukahkamu", description: "Random fun fact" },
+        { method: "GET", path: "/api/detiknews", description: "Detik headlines" },
+        { method: "GET", path: "/api/ping", description: "Health check (no key needed)" }
       ]
     }
   ];
